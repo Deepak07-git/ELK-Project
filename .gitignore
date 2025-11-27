@@ -1,0 +1,19 @@
+﻿# OS generated files and local artifacts
+.DS_Store
+Thumbs.db
+# envs
+.env
+# logs and outputs
+*.log
+enroll-output.txt
+# IDE
+.vscode/
+.idea/
+# OS
+desktop.ini
+# Elastic local data
+data/
+logs/
+elasticsearch/data/
+# Node
+node_modules/
