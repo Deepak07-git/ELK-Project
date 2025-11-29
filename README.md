@@ -45,4 +45,12 @@ docker compose up -d
 
 4. Use sample queries or visualizations to surface HTTP 500s, failed logins, DB errors etc.
 
+Parsing notes: Logstash is configured to try JSON parsing first and then fall back to grok + kv parsing for mixed logs (Apache/Nginx combined access logs, syslog/auth entries, application logs with levels, and key=value audit lines). Parsed fields are written using nested fields (e.g. `kv_parsed` / `app_kv`) to avoid mapping conflicts with ECS top-level fields.
+
 If Filebeat logs show `permission` errors, the service runs as root in the container to allow reading the mounted file in the development setup.
+
+Append new test lines to `logs/sample_logs.log` to exercise parsing and trigger indexing. Example (PowerShell):
+
+```powershell
+Add-Content -Path .\logs\sample_logs.log -Value '203.0.113.99 - - [29/Nov/2025:11:00:01 +0000] "GET /metrics HTTP/1.1" 200 1234 "-" "curl/7.68.0"'
+```
