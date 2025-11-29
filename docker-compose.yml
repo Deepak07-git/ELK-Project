@@ -1,4 +1,4 @@
-
+ 
 version: '3'
 services:
   elasticsearch:
@@ -25,6 +25,18 @@ services:
       - "5044:5044"
     volumes:
       - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+    networks:
+      - elk
+
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:8.11.1
+    user: root
+    depends_on:
+      - logstash
+    volumes:
+      - ./filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+      - ./sample_logs.log:/usr/share/filebeat/logs/sample_logs.log:ro
+    command: filebeat -e -strict.perms=false
     networks:
       - elk
 
