@@ -5,6 +5,8 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.11.1
     environment:
       - discovery.type=single-node
+      # for development only: disable xpack security (TLS + auth) so other services can use HTTP
+      - xpack.security.enabled=false
     ports:
       - "9200:9200"
     networks:
